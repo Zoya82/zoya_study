@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<assert.h>
+
 //定义顺序表的结构
 
 #define N 100
