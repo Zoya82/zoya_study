@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>聊天页面</title>
+</head>
+<body>
+<h2>与 {{ merchant.name }} 沟通中...</h2>
+<form action="/chat/{{ merchant.id }}" method="post">
+  <textarea name="message" rows="4" cols="50" placeholder="输入你的留言..."></textarea><br>
+  <button type="submit">发送</button>
+</form>
+<hr>
+<h3>历史留言：</h3>
+<ul>
+  {% for msg in messages %}
+  <li>{{ msg }}</li>
+  {% endfor %}
+</ul>
+</body>
+</html>

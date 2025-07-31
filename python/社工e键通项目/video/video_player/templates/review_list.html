@@ -1,0 +1,25 @@
+{% extends 'admin_dashboard.html' %}
+
+{% block title %}视频审核列表{% endblock %}
+
+{% block content %}
+<h2>视频审核列表</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>视频名称</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+    {% for video in videos %}
+    <tr>
+        <td>{{ video.id }}</td>
+        <td>{{ video.name }}</td>
+        <td>{{ video.status }}</td>
+        <td>
+            <a href="{{ url_for('review_video', video_id=video.id) }}">审核</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

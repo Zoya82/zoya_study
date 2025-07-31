@@ -1,0 +1,22 @@
+<!-- templates/communicate.html -->
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>沟通页面</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<h2>商户列表</h2>
+<ul>
+  {% for merchant in merchants %}
+  <li>
+    {{ merchant.name }}
+    <a href="/chat/{{ merchant.id }}">
+      <button>点击沟通</button>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+</body>
+</html>

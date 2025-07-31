@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户界面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .history-list {
+            margin-top: 20px;
+        }
+        .history-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .history-list li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .history-list li a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .history-list li a:hover {
+            text-decoration: underline;
+        }
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        .flash-messages .success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 3px;
+        }
+        .flash-messages .danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 3px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        form input[type="text"],
+        form input[type="password"],
+        form input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        form button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+        .avatar-section img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .avatar-section p {
+            color: #777;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .auth-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .auth-links a {
+            margin: 0 10px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>欢迎, {{ user.username }}!</h1>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- User Avatar -->
+        <div class="avatar-section">
+            {% if user.avatar %}
+                <img src="{{ url_for('static', filename='uploads/' + user.avatar) }}" alt="头像">
+            {% else %}
+                <p>No avatar uploaded yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Change Username -->
+        <h2>修改用户名</h2>
+        <form method="POST">
+            <label for="new_username">新的用户名:</label>
+            <input type="text" id="new_username" name="new_username" required>
+            <button type="submit">修改用户名</button>
+        </form>
+
+        <!-- Change Password -->
+        <h2>修改密码</h2>
+        <form method="POST">
+            <label for="new_password">新密码:</label>
+            <input type="password" id="new_password" name="new_password" required>
+            <button type="submit">修改密码</button>
+        </form>
+
+        <!-- Add to Watch History -->
+        <h2>添加购买记录</h2>
+        <form method="POST">
+            <label for="video_title">服务名称（严格输入）:</label>
+            <input type="text" id="video_title" name="video_title" required>
+            <button type="submit">添加到记录</button>
+        </form>
+
+        <!-- Watch History -->
+        <h2>购买记录</h2>
+        <div class="history-list">
+            <ul>
+                {% for movie in history %}
+                    <li>
+                        <strong>{{ movie.name }}</strong>
+                        <a href="{{ url_for('play_video', movie_id=movie.id) }}">查看详情</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Update Avatar -->
+        <h2>更新头像</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="avatar">上传头像:</label>
+            <input type="file" id="avatar" name="avatar">
+            <button type="submit">更新头像</button>
+        </form>
+
+        <!-- Back to Video List -->
+        <a href="{{ url_for('video_list') }}" class="back-link">返回</a>
+
+        <!-- Authentication Links -->
+        <div class="auth-links">
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}">登出</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">登入</a>
+                <a href="{{ url_for('register') }}">注册</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

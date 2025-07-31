@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传视频 视频播放网站</title>
+    <link rel="stylesheet" href="/static/css/layui.css">
+    <style>
+        .title{
+            margin-top:100px;
+            text-align:center;
+            font-size:52px;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-container">
+    <h2 class="title">上传视频</h2>
+    <div style="width:50%;margin:0 auto">
+        <button type="button" class="layui-btn demo-class-accept" lay-options="{accept:'video'}">
+            <i class="layui-icon layui-icon-upload"></i>
+            上传视频
+        </button>
+    </div>
+</div>
+<script src="/static/layui.js"></script>
+<script>
+    layui.use(function(){
+        const upload = layui.upload;
+        const layer=layui.layer;
+        //渲染
+        upload.render({
+            elem:'.demo-class-accept',
+            url:'/video_upload',
+            accept:'file',
+            done:function(res){
+                layer.msg('上传成功');
+                console.log(res);
+            }
+        })
+    });
+</script>
+
+</body>
+</html>

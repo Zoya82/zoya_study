@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传视频 社工e键通</title>
+    <link rel="stylesheet" href="/static/css/layui.css">
+    <style>
+        .title {
+            margin-top: 100px;
+            text-align: center;
+            font-size: 52px;
+        }
+        .button-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .button-container .layui-btn {
+            margin: 0 20px;
+            width: 120px;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-container">
+    <h2 class="title">购买确认</h2>
+    <video style="max-width:100%;" controls="controls" poster="{{ url }}">
+        <source src="{{ url }}" type="video/mp4"/>
+        Your browser does not support the video tag.
+    </video>
+    <div class="button-container">
+        <button class="layui-btn layui-btn-danger" id="cancel-btn">取消订单</button>
+        <button class="layui-btn layui-btn-normal" id="confirm-btn">确定购买</button>
+        <button class="layui-btn layui-btn-warm" onclick="location.href='/communicate'">详谈</button>
+    </div>
+</div>
+<script src="/static/layui.js"></script>
+<script>
+    document.getElementById("cancel-btn").addEventListener("click", function () {
+        layer.msg('订单取消成功', {time: 1500}, function () {
+            window.location.href = '/';
+        });
+    });
+
+    document.getElementById("confirm-btn").addEventListener("click", function () {
+        layer.msg('购买成功', {time: 1500}, function () {
+            window.location.href = '/';
+        });
+    });
+</script>
+</body>
+</html>

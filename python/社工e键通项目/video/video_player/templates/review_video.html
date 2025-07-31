@@ -1,0 +1,51 @@
+{% extends 'admin_dashboard.html' %}
+
+{% block content %}
+<h2>审核视频 - {{ video.name }}</h2>
+
+<!-- 视频播放 -->
+<video width="640" height="360" controls>
+    <source src="{{ video.url }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<!-- 审核操作表单 -->
+<form method="POST" class="mt-3">
+    <div class="form-group">
+        <label for="action">审核操作:</label>
+        <select name="action" id="action" class="form-control">
+            <option value="approve">审核通过</option>
+            <option value="reject">审核不通过</option>
+            <option value="pending">重置为待审核</option>
+            <option value="delete">删除</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">提交审核</button>
+</form>
+
+<!-- 返回审核列表 -->
+<a href="{{ url_for('review_list') }}" class="btn btn-secondary mt-3">返回审核列表</a>
+
+<!-- 显示 flash 消息 -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flashes mt-3">
+    {% for category, message in messages %}
+      <li class="alert alert-{{ category }}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+{% if 'delete' in request.form.get('action', '') %}
+    <script type="text/javascript">
+        // 弹出删除成功提示框
+        alert("删除成功！");
+        // 延迟几秒后自动跳转到主页面
+        setTimeout(function() {
+            window.location.href = "{{ url_for('video_list') }}";  // 跳转到主页
+        }, 2000);  // 2秒后跳转
+    </script>
+{% endif %}
+
+{% endblock %}
