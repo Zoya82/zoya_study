@@ -33,17 +33,18 @@ enum CardSuitType {
  */
 class CardModel {
 public:
-    CardModel(int id, CardFaceType face, CardSuitType suit, const cocos2d::Vec2& pos);
+    CardModel(CardSuitType suit, CardFaceType face, const cocos2d::Vec2& pos)
+        : _suit(suit), _face(face), _position(pos) {
+    }
 
-    int getId() const;
-    CardFaceType getFace() const;
-    CardSuitType getSuit() const;
-    const cocos2d::Vec2& getPosition() const;
-    void setPosition(const cocos2d::Vec2& pos);
+    CardSuitType getSuit() const { return _suit; }
+    CardFaceType getFace() const { return _face; }
+    cocos2d::Vec2 getPosition() const { return _position; }
+
+    void setPosition(const cocos2d::Vec2& pos) { _position = pos; }
 
 private:
-    int _id;
-    CardFaceType _face;
     CardSuitType _suit;
+    CardFaceType _face;
     cocos2d::Vec2 _position;
 };

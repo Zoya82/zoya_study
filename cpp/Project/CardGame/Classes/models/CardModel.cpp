@@ -1,11 +1,21 @@
-#include "CardModel.h"
+#pragma once
+#include "CardDefs.h"
+#include "cocos2d.h"
+#include <memory>
 
-CardModel::CardModel(int id, CardFaceType face, CardSuitType suit, const cocos2d::Vec2& pos)
-    : _id(id), _face(face), _suit(suit), _position(pos) {
-}
+class CardModel {
+public:
+    CardModel(CardSuitType suit, CardFaceType face, const cocos2d::Vec2& pos)
+        : _suit(suit), _face(face), _position(pos) {}
 
-int CardModel::getId() const { return _id; }
-CardFaceType CardModel::getFace() const { return _face; }
-CardSuitType CardModel::getSuit() const { return _suit; }
-const cocos2d::Vec2& CardModel::getPosition() const { return _position; }
-void CardModel::setPosition(const cocos2d::Vec2& pos) { _position = pos; }
+    CardSuitType getSuit() const { return _suit; }
+    CardFaceType getFace() const { return _face; }
+    cocos2d::Vec2 getPosition() const { return _position; }
+
+    void setPosition(const cocos2d::Vec2& pos) { _position = pos; }
+
+private:
+    CardSuitType _suit;
+    CardFaceType _face;
+    cocos2d::Vec2 _position;
+};
